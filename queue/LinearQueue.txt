@@ -1,0 +1,63 @@
+package queue;
+
+public class LinearQueue {
+	private int front;
+	private int rear;
+	private int size;
+	private int[] queue;
+
+	// 초기 공백 큐 생성
+	public LinearQueue(int size) {
+		front = -1;
+		rear = -1;
+		this.size = size;
+		queue = new int[this.size];
+	}
+
+	// 공백 큐 검사 메서드
+	public boolean isEmpty() {
+		return front == rear;
+	}
+
+	// 포화 상태 검사 메서드
+	public boolean isFull() {
+		return rear == size - 1;
+	}
+
+	// 삽입 연산
+	public void enQueue(int item) {
+		if(isFull())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		queue[++rear] = item;
+	}
+
+	// 삭제 연산
+	public int deQueue() {
+		if(isEmpty())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		return queue[++front];
+	}
+	
+	// 첫 번째 원소 조회
+	public int peek() {
+		if(isEmpty())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		return queue[front + 1];
+	}
+
+	// 출력 메서드
+	public void printQueue() {
+		if(isEmpty())
+			System.out.println("Queue is Empty!");
+		else {
+			System.out.print("ArrayQueue : ");
+			for(int i = front + 1; i <= rear; i++) {
+				System.out.print(queue[i] + " ");
+			}
+			System.out.println();
+		}
+	}
+}
