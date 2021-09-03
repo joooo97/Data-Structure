@@ -1,0 +1,68 @@
+package stack;
+
+import java.util.EmptyStackException;
+
+public class ArrayStack {
+	// 필드
+	private int top; // stack 저장을 위한 index 변수
+	private int size; // 스택 용량
+	private Object[] stack; // 스택 배열
+	// 타입 변수T로 배열 선언은 가능하나 지네릭 배열 생성은 불가능
+
+	// 생성자 (스택 본체용 배열을 생성하는 등 준비 작업 수행)
+	public ArrayStack(int size) {
+		top = -1;
+		this.size = size; 
+		stack = new Object[this.size];
+	}
+
+	// isEmpty 메서드 (스택이 비어있는지 검사)
+	public boolean isEmpty() {
+		return top == -1;
+	}
+
+	// isFull 메서드 (스택이 가득 찼는지 검사)
+	public boolean isFull() {
+		return top == size - 1;
+	}
+
+	// push 메서드
+	public void push(Object data) {
+		if(isFull())
+			System.out.println("Stack is full!");
+		else
+			stack[++top] = data;
+	}
+
+	// pop 메서드 (top위치의 데이터 제거 후 값 반환)
+	public Object pop() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+			throw new EmptyStackException();
+		} 
+		return stack[top--];
+	}
+
+	// peek 메서드 (top의 데이터 들여다봄 - 값을 제거하지 않고 반환만 함)
+	public Object peek() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+			throw new EmptyStackException();
+		}
+		return stack[top];
+	}
+
+	// 출력메서드 (bottom에서 top순으로 데이터 출력)
+	public void printStack() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+		} else {
+			System.out.print("Stack elements : ");
+			for (int i = 0; i <= top; i++) {
+				System.out.print(stack[i] + " ");
+			}
+			System.out.println();			
+		}
+	}
+}
+
