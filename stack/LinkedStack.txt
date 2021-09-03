@@ -1,0 +1,63 @@
+package stack;
+
+import java.util.*;
+
+public class LinkedStack<T> {
+	// 노드 클래스
+	class Node<T> {
+		private T data;
+		private Node<T> next;
+
+		public Node(T data) {
+			this.data = data;
+			this.next = null;
+		}
+	}
+
+	private Node<T> top;
+
+	public boolean isEmpty() {
+		return top == null;
+	}
+
+	public void push(T data) {
+		Node<T> newNode = new Node<>(data);
+		newNode.next = top;
+		top = newNode;
+	}
+
+	public T pop() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+			throw new EmptyStackException();
+		}
+
+		T data = top.data;
+		top = top.next;
+		return data;
+	}
+
+	public T peek() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+			throw new EmptyStackException();
+		}
+
+		return top.data;
+	}
+
+	public void printStack() {
+		if(isEmpty()) {
+			System.out.println("Stack is empty!");
+		} else {
+			System.out.print("Stack elements : ");
+
+			Node<T> temp = top;
+			while(temp != null) {
+				System.out.print(temp.data + " ");
+				temp = temp.next;
+			}
+			System.out.println();
+		}
+	}
+}
