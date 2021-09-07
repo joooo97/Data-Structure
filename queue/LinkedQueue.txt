@@ -1,0 +1,86 @@
+package queue;
+
+public class LinkedQueue<T> {
+	// 노드 클래스
+	private class Node<T> {
+		private T data;
+		private Node<T> next;
+		
+		public Node(T data) {
+			this.data = data;
+			next = null;
+		}
+	}
+	
+	// 연결 큐의 필드
+	private Node<T> front;
+	private Node<T> rear;
+
+	// 생성자로 초기 공백 큐 생성
+	public LinkedQueue() {
+		front = null;
+		rear = null;
+	}
+	
+	// 공백 큐 검사 메서드
+	public boolean isEmpty() {
+		return front == null;
+	}
+	
+	// 삽입 연산
+	public void enQueue(T data) {
+		// 새 노드 생성
+		Node<T> newNode = new Node<T>(data);
+
+		// 공백 큐인 경우 새 노드를 front, rear로 지정
+		if(isEmpty()) {
+			front = newNode;
+			rear = newNode;
+		} else { // 공백 큐가 아닌 경우
+			rear.next = newNode; // 새 노드를 마지막 노드로 삽입
+			rear = newNode; // 참조변수 rear가 새 노드 가리키게 함
+		}
+	}
+	
+	// 삭제 연산
+	public T deQueue() {
+		if(isEmpty()) {
+			System.out.println("Queue is empty!");
+			return null;
+		}
+		
+		T data = front.data; // 삭제할 노드의 데이터 저장
+		front = front.next; // front 노드 재설정
+		
+		// 삭제 후 공백 큐가 되는 경우 rear도 null로 설정
+		if(front == null) 
+			rear = null;
+		
+		return data;
+	}
+	
+	public T peek() {
+		if(isEmpty()) {
+			System.out.println("Queue is empty!");
+			return null;
+		}
+		
+		return front.data;
+	}
+	
+	// 출력 메서드
+	public void printQueue() {
+		if(isEmpty()) {
+			System.out.println("Queue is empty!");
+			return;
+		}
+		
+		System.out.println("-- LinkedQueue --");
+		Node<T> tmp = front;
+		while(tmp != null) {
+			System.out.print(tmp.data + " ");
+			tmp = tmp.next;
+		}
+		System.out.println();
+	}
+}
