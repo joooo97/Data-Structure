@@ -1,0 +1,65 @@
+package queue;
+
+public class CircularQueue {
+	private int front;
+	private int rear;
+	private int size;
+	private Object[] queue;
+	
+	public CircularQueue(int size) {
+		front = 0;
+		rear = 0;
+		this.size = size;
+		queue = new Object[this.size];
+	}
+	
+	// 공백 상태 검사 메서드
+	public boolean isEmpty() {
+		return front == rear;
+	}
+	
+	// 포화 상태 검사 메서드
+	public boolean isFull() {
+		return (rear + 1) % size == front;
+	}
+	
+	// 삽입 메서드
+	public void enQueue(Object item) {
+		if(isFull())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		rear = (rear + 1) % size;
+		queue[rear] = item;
+	}
+	
+	// 삭제 메서드
+	public Object deQueue() {
+		if(isEmpty())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		front = (front + 1) % size;
+		return queue[front];
+	}
+	
+	// peek 메서드
+	public Object peek() {
+		if(isEmpty())
+			throw new ArrayIndexOutOfBoundsException();
+		
+		return queue[(front + 1) % size];
+	}
+	
+	// 원소 출력 메서드
+	public void printQueue() {
+		if(isEmpty()) {
+			System.out.println("Queue is empty!");
+			return;
+		}
+		
+		System.out.println("-- CircularQueue --");
+		for(int i = (front + 1) % size; i != (rear + 1) % size; i = (i + 1) % size) {
+			System.out.print(queue[i] + " ");
+		}
+		System.out.println();
+	}
+}
