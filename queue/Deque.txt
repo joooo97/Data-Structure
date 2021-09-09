@@ -1,0 +1,147 @@
+package queue;
+
+public class Deque<T> {
+	// 노드 클래스
+	private class Node<T> {
+		private T data;
+		private Node<T> llink;
+		private Node<T> rlink;
+		
+		public Node(T data) {
+			this.data = data;
+			llink = null;
+			rlink = null;
+		}
+	}
+	
+	// 덱의 필드
+	private Node<T> front;
+	private Node<T> rear;
+	
+	// 덱의 생성자 (front, rear 초기화)
+	public Deque() {
+		front = null;
+		rear = null;
+	}
+
+	// 공백 상태 검사
+	public boolean isEmpty() {
+		return front == null;
+	}
+	
+	// insertFront(): front 앞에 원소 삽입
+	public void insertFront(T data) {
+		// 삽입할 새 노드 생성
+		Node<T> newNode = new Node<T>(data);
+		
+		// 공백 덱인 경우 front, rear가 모두 새 노드를 가리키게 함
+		if(isEmpty()) {
+			front = newNode;
+			rear = newNode;
+		} else {
+			// 현재 front 원소와 새 노드를 연결한 후 새 노드를 front 원소로 지정
+			front.llink = newNode;
+			newNode.rlink = front;
+			front = newNode;
+		}
+	}
+	
+	// insertRear(): rear 뒤에 원소 삽입
+	public void insertRear(T data) {
+		Node<T> newNode = new Node<T>(data);
+		
+		// 공백 덱인 경우 front, rear가 모두 새 노드를 가리키게 함
+		if(isEmpty()) {
+			front = newNode;
+			rear = newNode;
+		} else {
+			// 현재 rear 원소와 새 노드를 연결한 후 새 노드를 rear 원소로 지정
+			rear.rlink = newNode;
+			newNode.llink = rear;
+			rear = newNode;
+		}
+	}
+	
+	// deleteFront(): front 원소 삭제 후 반환
+	public T deleteFront() {
+		if(isEmpty()) {
+			System.out.println("Deque is empty!");
+			return null;
+		}
+		
+		T data = front.data; // 삭제할 원소의 데이터 저장
+		
+		// 원소가 한 개인 경우 (front 다음에 원소가 없는 경우)
+		if(front.rlink == null) {
+			// 원소 삭제 후 공백 덱이 될 것
+			front = null;
+			rear = null;
+		} else { // 원소가 여러 개인 경우
+			// front의 다음 원소를 front 원소로 지정 후 삭제할 원소와의 연결 끊기
+			front = front.rlink;
+			front.llink = null;
+		}
+		return data;
+	}
+	
+	// deleteRear(): rear 원소 삭제 후 반환
+	public T deleteRear() {
+		if(isEmpty()) {
+			System.out.println("Deque is empty!");
+			return null;
+		}
+		
+		T data = rear.data;
+		
+		// 원소가 한 개인 경우 (rear 전에 원소가 없는 경우)
+		if(rear.llink == null) {
+			// 원소 삭제 후 공백 덱이 될 것
+			front = null;
+			rear = null;
+		} else { // 원소가 여러 개인 경우
+			// rear의 전 원소를 rear 원소로 지정 후 삭제할 원소와의 연결 끊기 
+			rear = rear.llink;
+			rear.rlink = null;
+		}
+		
+		return data;
+	}
+	
+	// peekFront(): front 원소 반환
+	public T peekFront() {
+		if(isEmpty()) {
+			System.out.println("Deque is empty!");
+			return null;
+		}
+		
+		return front.data;
+	}
+	
+	// peekRear(): rear 원소 반환
+	public T peekRear() {
+		if(isEmpty()) {
+			System.out.println("Deque is empty!");
+			return null;
+		}
+		
+		return rear.data;
+	}
+	
+	// 출력 메서드
+	public void printDeque() {
+		if(isEmpty()) {
+			System.out.println("Deque is empty!");
+			return;
+		}
+		
+		System.out.println("-- Deque --");
+		
+		Node<T> tmp = front;
+		while(tmp != null) {
+			System.out.print(tmp.data + " ");
+			tmp = tmp.rlink;
+		}
+		System.out.println();
+	}
+
+}
