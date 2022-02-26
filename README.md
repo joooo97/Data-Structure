@@ -1,2 +1,2 @@
-# Data-Structures
-자료구조 구현 정리
+# Data-Structure
+자료구조 정리
